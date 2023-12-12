@@ -1,5 +1,7 @@
+import { Card } from 'antd'
+
 const Widget = (props: { children: React.ReactNode }) => {
-  return <div className="widget">{props.children}</div>
+  return <Card>{props.children}</Card>
 }
 
 export default Widget

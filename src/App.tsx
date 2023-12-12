@@ -1,9 +1,6 @@
 import { useCallback, useEffect } from 'react'
-import 'antd/dist/antd.min.css'
 import './App.scss'
-import { ConfigProvider } from 'antd'
 import 'leaflet/dist/leaflet.css'
-import heIL from 'antd/es/locale/he_IL'
 import { BrowserRouter as Router, useSearchParams } from 'react-router-dom'
 import { PageSearchState, SearchContext } from './model/pageState'
 import moment from 'moment'
@@ -14,26 +11,14 @@ import { CacheProvider } from '@emotion/react'
 import createCache from '@emotion/cache'
 import rtlPlugin from 'stylis-plugin-rtl'
 import 'moment/locale/he'
-import { heIL as heILmui } from '@mui/x-date-pickers/locales'
-import { ThemeProvider, createTheme } from '@mui/material'
+
+import { ThemeProvider } from './layout/ThemeContext'
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import { LocalizationProvider } from '@mui/x-date-pickers'
 
 import { usePages } from './routes'
 import { EasterEgg } from './pages/EasterEgg/EasterEgg'
 import MainLayout from './layout'
-
-const theme = createTheme(
-  {
-    direction: 'rtl',
-    palette: {
-      primary: {
-        main: '#5f5bff',
-      },
-    },
-  },
-  heILmui,
-)
 
 // Create rtl cache
 const cacheRtl = createCache({
@@ -90,13 +75,11 @@ const App = () => {
   return (
     <SearchContext.Provider value={{ search, setSearch: safeSetSearch }}>
       <CacheProvider value={cacheRtl}>
-        <ThemeProvider theme={theme}>
-          <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale="he">
-            <ConfigProvider direction="rtl" locale={heIL}>
-              <MainLayout />
-            </ConfigProvider>
-          </LocalizationProvider>
-        </ThemeProvider>
+        <LocalizationProvider dateAdapter={AdapterMoment} adapterLocale="he">
+          <ThemeProvider>
+            <MainLayout />
+          </ThemeProvider>
+        </LocalizationProvider>
       </CacheProvider>
     </SearchContext.Provider>
   )
